@@ -56,4 +56,7 @@ Current Quarter?: The majority of records are from "Other Quarters", which indic
 In conclusion, the data is now cleaned and prepared for further in-depth sales analysis. The initial insights gained from these summary statistics highlight areas for further investigation, such as the distribution of high-value deals, the relationship between discounts and sales, and the performance of different account types or industries. The cleaned data frame is stored in df.
 
 
+<img width="976" height="874" alt="image" src="https://github.com/user-attachments/assets/147e6cf8-7138-4a55-bd52-f29f4152e390" />
+
+
 
