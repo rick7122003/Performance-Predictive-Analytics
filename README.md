@@ -89,6 +89,191 @@ df.describe()
 
 EDA analysis and visualize charts & findings, report key take away findings.
 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Assuming 'df' is your cleaned and prepared DataFrame from previous steps
+
+# --- Additional EDA with Chart Visualization ---
+
+# 1. Scatter plot: Sales vs. Amount, colored by Discount Granted
+# This helps visualize how discounts might influence the relationship between opportunity amount and actual sales.
+plt.figure(figsize=(12, 8))
+sns.scatterplot(x='Amount', y='Sales', hue='Discount Granted', data=df, palette='viridis', alpha=0.7, size='Discount Granted', sizes=(20, 400))
+plt.title('Sales vs. Amount (Colored by Discount Granted)')
+plt.xlabel('Opportunity Amount ($)')
+plt.ylabel('Sales ($)')
+plt.xscale('log') # Use log scale for better visualization due to wide range of values
+plt.yscale('log') # Use log scale for better visualization due to wide range of values
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.show()
+
+# 2. Stacked Bar Chart: Win Rate by Account Type
+# This shows the proportion of 'Won' vs. 'Lost' opportunities for each account type.
+account_type_stage_counts = df.groupby(['Account Type', 'Won']).size().unstack(fill_value=0)
+account_type_stage_percent = account_type_stage_counts.apply(lambda x: x / x.sum(), axis=1)
+
+account_type_stage_percent.plot(kind='bar', stacked=True, figsize=(10, 6), colormap='Paired')
+plt.title('Opportunity Win/Loss Rate by Account Type')
+plt.xlabel('Account Type')
+plt.ylabel('Proportion')
+plt.xticks(rotation=45, ha='right')
+plt.legend(title='Won (1=True, 0=False)', labels=['Lost', 'Won'])
+plt.tight_layout()
+plt.show()
+
+# 3. Bar Chart: Total Sales by Billing Region
+# Understand which geographic regions contribute most to sales.
+sales_by_billing_region = df.groupby('Billing Region')['Sales'].sum().sort_values(ascending=False)
+plt.figure(figsize=(12, 7))
+sns.barplot(x=sales_by_billing_region.index, y=sales_by_billing_region.values, palette='coolwarm')
+plt.title('Total Sales by Billing Region')
+plt.xlabel('Billing Region')
+plt.ylabel('Total Sales ($)')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+
+# 4. Bar Chart: Top 10 Product Names by Number of Opportunities
+# Identify the most frequently occurring products in opportunities.
+top_products = df['Product Name'].value_counts().nlargest(10)
+plt.figure(figsize=(12, 7))
+sns.barplot(x=top_products.index, y=top_products.values, palette='crest')
+plt.title('Top 10 Product Names by Number of Opportunities')
+plt.xlabel('Product Name')
+plt.ylabel('Number of Opportunities')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+
+# 5. Box Plot: Sales Distribution by Industry
+# Visualize the distribution of sales values for different industries, showing median, quartiles, and outliers.
+plt.figure(figsize=(14, 8))
+sns.boxplot(x='Industry', y='Sales', data=df, palette='Set3')
+plt.title('Sales Distribution by Industry')
+plt.xlabel('Industry')
+plt.ylabel('Sales ($)')
+plt.xticks(rotation=45, ha='right')
+plt.yscale('log') # Use log scale if sales values have a wide range
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+
+<img width="513" height="654" alt="image" src="https://github.com/user-attachments/assets/93374004-76b8-4589-a986-253ee33db61f" />
+
+
+<img width="550" height="318" alt="image" src="https://github.com/user-attachments/assets/a8735783-b7ab-4192-b76a-5137ea134db9" />
+
+
+<img width="549" height="314" alt="image" src="https://github.com/user-attachments/assets/939d2335-1764-4e3d-b15a-7f3460a8430c" />
+
+
+
+<img width="546" height="316" alt="image" src="https://github.com/user-attachments/assets/7257f795-d4f3-403d-a88c-d3d5bcc1337a" />
+
+
+
+Summary of Findings and Key Takeaways: Sales vs. Amount (Colored by Discount Granted):
+
+The scatter plot reveals a strong positive correlation between Opportunity Amount and Sales, which is expected. Most points lie along the y=x line, indicating that the closed sales value is often very close to the initial opportunity amount.
+
+The Discount Granted does not show a clear pattern of severely reducing sales relative to the initial amount. Both high and low discounts are present across various Amount and Sales ranges. There might be cases where larger discounts are given for higher value deals to close them, but it doesn't appear to systematically pull sales significantly below the potential amount.
+
+Key Takeaway: The sales team generally closes deals close to their original proposed amount. While discounts are given, they don't seem to drastically alter the Amount to Sales conversion on a large scale. Further investigation into specific high-discount scenarios could reveal their impact on profitability.
+
+Opportunity Win/Loss Rate by Account Type:
+
+Gold and Platinum accounts generally show a higher proportion of "Won" opportunities compared to "Lost" ones. This is a positive sign, indicating effective engagement with high-tier customers.
+
+"Silver" and "Bronze" accounts, while having fewer overall opportunities, appear to have a lower win rate compared to "Gold" and "Platinum."
+
+Key Takeaway: Strategic focus on "Gold" and "Platinum" accounts is paying off in terms of win rates. Consider analyzing the sales strategies or challenges specific to "Silver" and "Bronze" accounts to improve their win rates, or re-evaluate the effort allocation if these tiers are less profitable.
+
+Total Sales by Billing Region:
+
+The "West" region significantly outperforms other regions in terms of total sales, followed by "Southwest" and "Northeast."
+
+"Central," "Southeast," and "Midwest" regions contribute substantially less to overall sales.
+
+Key Takeaway: The "West" region is a primary revenue driver. Investigate the success factors in the "West" (e.g., market density, sales team strength, specific industries) and consider replicating successful strategies in underperforming regions. Resource allocation and sales targets might need to be adjusted based on regional performance.
+
+Top 10 Product Names by Number of Opportunities:
+
+"MOL Standard" is by far the most frequently appearing product in opportunities, indicating its widespread presence in deals.
+
+Other products like "MOL Mobile" and "MOL Express" also appear frequently but significantly less than "MOL Standard."
+
+Key Takeaway: "MOL Standard" is a flagship product or a common component in many deals. Understanding its sales cycle, customer satisfaction, and cross-selling potential with other products is crucial. For other products, evaluate if their lower frequency is due to market demand or less focused sales efforts.
+
+Sales Distribution by Industry:
+
+Industries like "Technology," "Healthcare," and "Financial Services" show a wide range of sales, including some very high-value deals (indicated by longer tails or outliers in the box plots). This suggests these industries are capable of generating significant revenue.
+
+Other industries might have a tighter distribution of sales values, indicating more consistent but potentially lower average deal sizes.
+
+Key Takeaway: Focus sales and marketing efforts on industries that consistently yield high-value opportunities. Identify the characteristics of high-value deals within these industries to optimize sales strategies. For industries with lower average sales, consider volume-based strategies or re-evaluating the effort-to-return ratio.
+
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Assuming 'df' is your cleaned and prepared DataFrame from previous steps
+
+# --- EDA using Pairplot and Correlation Matrix ---
+
+# Select relevant numerical features for analysis
+# Exclude 'Sales_Category' as it's a derived target, not an original numerical feature for this context.
+# 'Sales' and 'Amount' are kept as their relationship is key, along with other quantitative measures.
+numerical_features_for_eda = [
+    'Amount', 'Sales', 'Opportunity Quantity', 'Discount Granted',
+    'Customer Count', 'Unit Price', 'Software Sold', 'Transactions',
+    'Days Left before EOQ'
+]
+
+# Ensure only existing columns are selected
+numerical_features_for_eda = [col for col in numerical_features_for_eda if col in df.columns]
+
+# Drop rows with NaN in these specific columns for accurate pairplot and correlation
+# It's better to handle missing values at the initial data cleaning stage, but for this specific EDA subset,
+# we ensure no NaNs affect the plots.
+df_eda_numerical = df[numerical_features_for_eda].dropna()
+
+# 1. Pairplot for selected numerical features
+# This generates scatter plots for all pairwise relationships and histograms for individual features.
+print("Generating Pairplot...")
+sns.pairplot(df_eda_numerical)
+plt.suptitle('Pairwise Relationships of Key Numerical Features', y=1.02) # Adjust suptitle position
+plt.show()
+print("Pairplot displayed.")
+
+
+# 2. Correlation Matrix for selected numerical features
+print("\nGenerating Correlation Matrix...")
+correlation_matrix = df_eda_numerical.corr()
+
+plt.figure(figsize=(12, 10))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5,
+            cbar_kws={'label': 'Correlation Coefficient'})
+plt.title('Correlation Matrix of Key Numerical Features')
+plt.xticks(rotation=45, ha='right')
+plt.yticks(rotation=0)
+plt.tight_layout()
+plt.show()
+print("Correlation Matrix displayed.")
+
+
+
+
+
+
+
+
+
 
 
 
