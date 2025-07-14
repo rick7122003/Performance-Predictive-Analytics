@@ -1,13 +1,10 @@
 # Capstone AI & Machine Learning: Sales prediction
 
-Sales Performance prediction
+<img width="298" height="31" alt="image" src="https://github.com/user-attachments/assets/ad7b6eb4-5ab6-4f14-be25-4086fb8d387d" />
+
+<img width="322" height="35" alt="image" src="https://github.com/user-attachments/assets/3934ed66-f8ba-46c8-86bd-7cbf9721e493" />
 
 
-
-
-
-
-Data Cleaning and Data preparation
 Summary and Findings: Data Overview:
 
 The dataset originally contained 3215 rows and 45 columns.
@@ -57,6 +54,50 @@ In conclusion, the data is now cleaned and prepared for further in-depth sales a
 
 
 <img width="976" height="874" alt="image" src="https://github.com/user-attachments/assets/147e6cf8-7138-4a55-bd52-f29f4152e390" />
+
+
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('salesforce data.csv')
+
+df.info()
+
+df.describe()
+
+<img width="268" height="594" alt="image" src="https://github.com/user-attachments/assets/c9c76a43-7491-41b0-82e4-9d3f48145829" />
+
+<img width="737" height="241" alt="image" src="https://github.com/user-attachments/assets/1305db4b-b92e-4998-9712-703bc5432059" />
+
+
+<img width="573" height="412" alt="image" src="https://github.com/user-attachments/assets/c7edc450-80a3-4b89-bc9e-77b7bd5e4cbe" />
+
+
+<img width="422" height="543" alt="image" src="https://github.com/user-attachments/assets/b1d88ba3-3824-49da-acee-061e2340c182" />
+
+
+<img width="738" height="563" alt="image" src="https://github.com/user-attachments/assets/9e381105-ca90-4994-9962-7eb000292aa0" />
+
+
+<img width="458" height="731" alt="image" src="https://github.com/user-attachments/assets/ab8a57c7-dcd0-4ba2-9fc5-d3e065705ae7" />
+
+
+<img width="248" height="277" alt="image" src="https://github.com/user-attachments/assets/aebdb456-e592-4195-8fe7-e70d17765785" />
+
+
+
+EDA analysis and visualize charts & findings, report key take away findings.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
